@@ -1,6 +1,6 @@
 # TryHackMe MD2PDF Write-up | 报告
 
-> I used the TryHackMе AttackBox for this room.
+> I used the TryHackMе AttackBox for this room.  
 > 我使用了 TryHackMe 的 AttackBox 来攻破这个房间。
 
 ## Overview | 概述
@@ -119,6 +119,6 @@ The PDF displayed the contents of the localhost:5000/admin page, revealing the f
 * 影响：这使得攻击者能够访问内部服务（如5000端口）并获取信息（即标志）
 * 修复建议：对用户输入进行严格过滤，并为允许的URL协议实施白名单机制。
 
-*Note | 注:*
+*Note | 注:*  
 What's SSRF? (Server-side request forgery) - it's a computer security vulnerability that enables an attacker to send requests from a vulnerable server to internal or external systems or the server itself.  
 什么是SSRF？（服务器端请求伪造）——这是一种计算机安全漏洞，攻击者可借此从存在漏洞的服务器向内部或外部系统乃至服务器自身发送请求。
