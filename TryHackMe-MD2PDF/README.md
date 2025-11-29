@@ -1,7 +1,7 @@
 # TryHackMe MD2PDF Write-up
 > I used the TryHackMе AttackBox for this room.
 ## Overview
-This is my write-up for the [MD2PDF room] https://tryhackme.com/room/md2pdf. The goal was to exploit a web application that converts text to PDF to access a restricted page with flag. 
+This is my write-up for the [MD2PDF room](https://tryhackme.com/room/md2pdf). The goal was to exploit a web application that converts text to PDF to access a restricted page with flag. 
 I divided it into three steps:
 
 1. Reconnaissance (Scanning & Enumeration)
