@@ -15,7 +15,7 @@ I divided it into three steps:
 
 ### 1. Reconnaissance 
 
-### Scanning | 
+### Scanning
 
 After getting target IP-address, we can scan it to search for open ports using Nmap.  
 
@@ -88,7 +88,7 @@ The PDF displayed the contents of the localhost:5000/admin page, revealing the f
 * Impact: This allowed an attacker to access internal services (like on port 5000) and retrieve information (the flag)
 * Mitigation: Sanitize user input and implement a whitelist for allowed URL schemes.  
 
-*Note | 注:*  
+*Note:*  
 What's SSRF? (Server-side request forgery) - it's a computer security vulnerability that enables an attacker to send requests from a vulnerable server to internal or external systems or the server itself.  
 
 ## 中文：  
