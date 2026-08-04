@@ -19,7 +19,7 @@ sudo nano /etc/hosts
 然后保存文件。
 
 
-将 futurevera 添加到 `/etc/hosts` 后，我们可以通过访问 ```https://futurevera.thm``` 来打开网站：
+将 futurevera 添加到 `/etc/hosts` 后，我们可以通过访问 `https://futurevera.thm``` 来打开网站：
 
 <img width="1226" height="879" alt="изображение" src="https://github.com/user-attachments/assets/7d40e3d8-ec3e-42c1-835d-2ea3c79e1083" />
 
@@ -47,15 +47,15 @@ ffuf -u https://10.146.166.183 -H "host: FUZZ.futurevera.thm" -w /usr/share/word
 
 <img width="638" height="283" alt="изображение" src="https://github.com/user-attachments/assets/db703ce6-208e-43da-9a5f-162901d90e18" />
 
-在 ```https://blog.futurevera.thm``` 没有什么有趣的东西。
+在 `https://blog.futurevera.thm` 没有什么有趣的东西。
 
 <img width="1231" height="876" alt="изображение" src="https://github.com/user-attachments/assets/bd8d7668-4576-42af-b502-bf8d5ce67c96" />
 
-在 ```https://support.futurevera.thm``` 也没有什么。
+在 `https://support.futurevera.thm` 也没有什么。
 
 <img width="1235" height="873" alt="изображение" src="https://github.com/user-attachments/assets/d8e3b245-61eb-4c76-8990-ac9440a43ac0" />
 
-让我们回到 ```https://support.futurevera.thm``` 的警告页面：
+让我们回到 `https://support.futurevera.thm` 的警告页面：
 
 <img width="882" height="795" alt="изображение" src="https://github.com/user-attachments/assets/158d27cf-2dc3-49d6-b4cb-0757193b7c2a" />
 
@@ -67,11 +67,11 @@ ffuf -u https://10.146.166.183 -H "host: FUZZ.futurevera.thm" -w /usr/share/word
 
 <img width="651" height="152" alt="изображение" src="https://github.com/user-attachments/assets/a16fd5c9-3eb2-4765-a9d0-eac2c1454437" />
 
-之后我们可以查看 ```https://secrethelpdesk934752.support.futurevera.thm```：
+之后我们可以查看 `https://secrethelpdesk934752.support.futurevera.thm`：
 
 <img width="1233" height="871" alt="изображение" src="https://github.com/user-attachments/assets/073dd83f-1614-4f1b-bdfc-463c710b163a" />
 
-这里什么都没有。我们应该尝试使用 http 协议访问，而不是 https，然后我们会看到 ```http://secrethelpdesk934752.support.futurevera.thm``` 页面：
+这里什么都没有。我们应该尝试使用 http 协议访问，而不是 https，然后我们会看到 `http://secrethelpdesk934752.support.futurevera.thm` 页面：
 
 <img width="1219" height="700" alt="изображение" src="https://github.com/user-attachments/assets/9bd20e22-4c92-49cc-a9a6-ad17c4cc4780" />
 
@@ -103,7 +103,7 @@ And add MACHINE_IP with `futurevera.thm` to the list:
 Then save the file.
 
 
-After adding futurevera to `/etc/hosts` we can open the site by going ```https://futurevera.thm```:
+After adding futurevera to `/etc/hosts` we can open the site by going `https://futurevera.thm`:
 
 <img width="1226" height="879" alt="изображение" src="https://github.com/user-attachments/assets/7d40e3d8-ec3e-42c1-835d-2ea3c79e1083" />
 
@@ -131,19 +131,19 @@ We got two subdomains: `support` and `blog`. Add them to `/etc/hosts`:
 
 <img width="638" height="283" alt="изображение" src="https://github.com/user-attachments/assets/db703ce6-208e-43da-9a5f-162901d90e18" />
 
-At the ```https://blog.futurevera.thm``` nothing interesting.
+At the `https://blog.futurevera.thm` nothing interesting.
 
 <img width="1231" height="876" alt="изображение" src="https://github.com/user-attachments/assets/bd8d7668-4576-42af-b502-bf8d5ce67c96" />
 
-At the ```https://support.futurevera.thm``` nothing too.
+At the `https://support.futurevera.thm` nothing too.
 
 <img width="1235" height="873" alt="изображение" src="https://github.com/user-attachments/assets/d8e3b245-61eb-4c76-8990-ac9440a43ac0" />
 
-Let's go back to the warning page at ```https://support.futurevera.thm```:
+Let's go back to the warning page at `https://support.futurevera.thm`:
 
 <img width="882" height="795" alt="изображение" src="https://github.com/user-attachments/assets/158d27cf-2dc3-49d6-b4cb-0757193b7c2a" />
 
-Press the "**View Certificate**" button, then find the DNS Name:
+Press the "**View Certificate**" button to open SSL, then find the DNS Name:
 
 <img width="800" height="718" alt="изображение" src="https://github.com/user-attachments/assets/d7f070f3-2436-4138-b084-b66717cc973c" />
 
@@ -151,7 +151,7 @@ Copy it and add to `/etc/hosts` again:
 
 <img width="651" height="152" alt="изображение" src="https://github.com/user-attachments/assets/a16fd5c9-3eb2-4765-a9d0-eac2c1454437" />
 
-After that we can check ```https://secrethelpdesk934752.support.futurevera.thm```:
+After that we can check `https://secrethelpdesk934752.support.futurevera.thm`:
 
 <img width="1233" height="871" alt="изображение" src="https://github.com/user-attachments/assets/073dd83f-1614-4f1b-bdfc-463c710b163a" />
 
