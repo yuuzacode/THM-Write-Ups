@@ -1,5 +1,43 @@
 # Lo-Fi Write-up | 报告
 
+<details>
+  <summary>Click to view in Chinese (点击查看中文版)</summary>
+
+---
+  
+这是我对 [Lo-Fi](https://tryhackme.com/room/lofi) 房间的write-up。这是一个专注于文件系统遍历的CTF挑战题。
+
+获取到机器的IP地址后，我们可以访问网页 `http://MACHINE_IP`：
+
+这个房间的主题是文件系统，所以我使用FFuF工具进行了目录枚举：
+```
+ffuf -u http://MACHINE_IP/FUZZ -w /usr/share/wordlists/seclists/Discovery/Web-Content/DirBuster-2007_directory-list-2.3-medium.txt
+```
+（如果你没有这个词表，可以通过运行 `sudo apt install seclists` 来下载）
+
+枚举之后，我们发现了 `server-status` 目录，但没有权限访问它。
+
+接着我查看了网页源码，找到了一些带有文件的目录，但并没有找到flag。
+
+网页上有一个搜索框。如果你输入内容并点击“Go!”按钮，它会改变页面的URL并执行搜索。
+
+我们可以利用这一点。就像在终端里操作一样：通过使用多个 `../` 命令，我们尝试进入文件系统的根目录，并访问 `/etc/passwd` 目录。另外，别忘了把URL中的 `?search=` 改成 `?page=`，这样才能看到结果。
+
+结果证明我们可以通过URL注入来访问数据。接下来让我们检查 `flag.txt`。
+
+页面最终显示了flag。
+
+## 总结
+在这个房间里，我学到了如何：
+
+* 使用URL注入来访问数据。
+
+---
+
+  </details>
+
+---
+
 This is my write-up for the [Lo-Fi](https://tryhackme.com/room/lofi) room. This is CTF challenge focused on filesystem traversal.
 
 After getting an IP address of the machine, we can go to the web page `http://MACHINE_IP`:
