@@ -1,6 +1,6 @@
 # Silver Platter Write-up | 报告
 
-This is my write-up for the Silver Platter room. This is a CTF challenge where we will dive into the web server to find hidden flags via SSH.
+This is my write-up for the [Silver Platter](https://tryhackme.com/room/silverplatter) room. This is a CTF challenge where we will dive into the web server to find hidden flags via SSH.
 
 We have to find user's flag and root's flag.
 
