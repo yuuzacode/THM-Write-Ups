@@ -44,8 +44,6 @@ ffuf -u http://MACHINE_IP/FUZZ -w /usr/share/wordlists/seclists/Discovery/Web-Co
 
 * 使用URL注入来访问数据。
 
----
-
   </details>
 
 ---
