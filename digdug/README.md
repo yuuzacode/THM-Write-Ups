@@ -14,6 +14,7 @@
 ```
 dig MACHINE_IP
 ```
+<img width="1138" height="370" alt="image" src="https://github.com/user-attachments/assets/85662e34-27c4-433d-b943-fb3b9721bf7a" />
 
 如你所见，我们得到了一些域名：`a.root-servers.net` 和 `nstld.verisign-grs.com`，但我们不需要关注这些，因为提示是关于DNS记录的。
 
@@ -24,8 +25,9 @@ dig MACHINE_IP
 ```
 dig @MACHINE_IP givemetheflag.com
 ```
+这个命令让我们可以看到特定DNS服务器关于该域名所看到的记录。
 
-上面的这个命令让我们可以看到特定DNS服务器关于该域名所看到的记录。
+<img width="806" height="351" alt="image" src="https://github.com/user-attachments/assets/a281f651-ef5e-4737-9298-ae60ce24a7d2" />
 
 而TXT记录揭示了flag。
 
@@ -46,6 +48,7 @@ After getting MACHINE_IP, I searched for DNS records via `dig` command.
 ```
 dig MACHINE_IP
 ```
+<img width="1138" height="370" alt="image" src="https://github.com/user-attachments/assets/7beb3598-d8fa-465d-a807-ce60febf484a" />
 
 As you can see we got some domains: `a.root-servers.net` & `nstld.verisign-grs.com`, but we don't have to focus on that, since the hint is about the DNS records.
 
@@ -56,7 +59,9 @@ A little later I understood that we need to combine MACHINE_IP with the domain `
 ```
 dig @MACHINE_IP givemetheflag.com
 ```
-This command above lets us see what records specific DNS server sees about the domain.
+This command lets us see what records specific DNS server sees about the domain.
+
+<img width="806" height="351" alt="image" src="https://github.com/user-attachments/assets/b1f57a3d-52d4-4216-b087-616f6056cd45" />
 
 And the TXT-record reveals the flag.
 
