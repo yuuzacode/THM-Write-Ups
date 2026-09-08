@@ -6,3 +6,4 @@ Write-ups and notes for TryHackMe rooms.
 - [TakeOver](https://github.com/yuuzadev/thm/tree/main/takeover)
 - [Lo-Fi](https://github.com/yuuzadev/thm/tree/main/lofi)
 - [Silver Platter](https://github.com/yuuzadev/thm/tree/main/silverplatter)
+- [Dig Dug](https://github.com/yuuzadev/thm/tree/main/digdug)
